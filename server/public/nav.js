@@ -194,14 +194,27 @@
     <style>
       /* Add padding to body to prevent navbar overlap */
       body {
-        padding-top: 60px;
+        padding-top: var(--nav-height);
       }
 
       .navbar {
-        background: #fff;
-        box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
-        height: 60px;
-        padding: 0 1rem;
+        /* Theme-aware tokens (PicoCSS variables adapt automatically) */
+        --navbar-bg: var(--pico-card-background-color, var(--color-nav-bg));
+        --navbar-shadow: var(--pico-box-shadow, var(--shadow-nav, var(--shadow-sm)));
+        --navbar-text: var(--pico-color, var(--color-text-heading));
+        --navbar-muted: var(--pico-muted-color, var(--color-text-secondary));
+        --navbar-hover-bg: var(--pico-dropdown-hover-background-color, var(--color-bg-subtle));
+        --navbar-border: var(--pico-muted-border-color, var(--color-border));
+        --navbar-dropdown-bg: var(--pico-dropdown-background-color, var(--color-bg-card));
+        --navbar-dropdown-shadow: var(--pico-dropdown-box-shadow, var(--shadow-lg));
+        --navbar-dropdown-header-bg: var(--pico-card-sectioning-background-color, var(--color-bg-subtle));
+        --navbar-danger: var(--color-error-600);
+        --navbar-danger-hover-bg: var(--color-error-50);
+
+        background: var(--navbar-bg);
+        box-shadow: var(--navbar-shadow);
+        height: var(--nav-height);
+        padding: 0 var(--nav-padding-x);
         position: fixed;
         top: 0;
         left: 0;
@@ -213,7 +226,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        max-width: 1440px;
+        max-width: var(--container-wide);
         margin: 0 auto;
         height: 100%;
       }
@@ -251,47 +264,47 @@
       }
 
       .navbar__title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #000;
+        font-size: var(--text-xl);
+        font-weight: var(--font-bold);
+        color: var(--navbar-text);
       }
 
       .navbar__link {
         text-decoration: none;
-        color: #000;
-        font-weight: 500;
-        padding: 0.5rem 0.75rem;
-        border-radius: 0.25rem;
-        transition: background-color 0.2s;
+        color: var(--navbar-text);
+        font-weight: var(--font-medium);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-sm);
+        transition: var(--transition-colors);
       }
 
       .navbar__link:hover {
-        background: rgba(0, 0, 0, 0.05);
+        background: var(--navbar-hover-bg);
       }
 
       .navbar__link.active {
-        color: var(--aao-primary, #1a36b4);
-        font-weight: 600;
+        color: var(--color-brand);
+        font-weight: var(--font-semibold);
       }
 
       /* Primary button style */
       .navbar__btn {
         display: inline-flex;
         align-items: center;
-        padding: 0.5rem 1rem;
-        border-radius: 0.375rem;
-        font-weight: 500;
+        padding: var(--space-2) var(--space-4);
+        border-radius: var(--radius-md);
+        font-weight: var(--font-medium);
         text-decoration: none;
-        transition: all 0.2s;
+        transition: var(--transition-all);
       }
 
       .navbar__btn--primary {
-        background: #1a36b4;
-        color: #fff;
+        background: var(--color-brand);
+        color: var(--color-text-on-dark);
       }
 
       .navbar__btn--primary:hover {
-        background: #2d4fd6;
+        background: var(--color-brand-hover);
       }
 
       /* Account dropdown */
@@ -302,33 +315,33 @@
       .navbar__account-btn {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 0.75rem;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
         background: transparent;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.375rem;
+        border: var(--border-1) solid var(--navbar-border);
+        border-radius: var(--radius-md);
         cursor: pointer;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #000;
-        transition: all 0.2s;
+        font-size: var(--text-sm);
+        font-weight: var(--font-medium);
+        color: var(--navbar-text);
+        transition: var(--transition-all);
       }
 
       .navbar__account-btn:hover {
-        background: rgba(0, 0, 0, 0.05);
-        border-color: #d1d5db;
+        background: var(--navbar-hover-bg);
+        border-color: var(--color-border-strong);
       }
 
       .navbar__dropdown {
         display: none;
         position: absolute;
-        top: calc(100% + 0.5rem);
+        top: calc(100% + var(--space-2));
         right: 0;
         min-width: 200px;
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 0.5rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        background: var(--navbar-dropdown-bg);
+        border: var(--border-1) solid var(--navbar-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--navbar-dropdown-shadow);
         overflow: hidden;
         z-index: 1001;
       }
@@ -350,9 +363,9 @@
         cursor: pointer;
         font-size: inherit;
         font-family: inherit;
-        padding: 0.5rem 0.75rem;
-        padding-bottom: 1rem;
-        margin-bottom: -0.5rem;
+        padding: var(--space-2) var(--space-3);
+        padding-bottom: var(--space-4);
+        margin-bottom: calc(var(--space-2) * -1);
       }
 
       .navbar__dropdown--nav {
@@ -368,37 +381,37 @@
       }
 
       .navbar__dropdown--nav .navbar__dropdown-item.active {
-        color: var(--aao-primary, #1a36b4);
-        font-weight: 600;
+        color: var(--color-brand);
+        font-weight: var(--font-semibold);
       }
 
       .navbar__dropdown-header {
-        padding: 0.75rem 1rem;
-        font-size: 0.75rem;
-        color: #6b7280;
-        border-bottom: 1px solid #e5e7eb;
-        background: #f9fafb;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-xs);
+        color: var(--navbar-muted);
+        border-bottom: var(--border-1) solid var(--navbar-border);
+        background: var(--navbar-dropdown-header-bg);
       }
 
       .navbar__dropdown-item {
         display: block;
-        padding: 0.75rem 1rem;
+        padding: var(--space-3) var(--space-4);
         text-decoration: none;
-        color: #000;
-        font-size: 0.875rem;
-        transition: background-color 0.2s;
+        color: var(--navbar-text);
+        font-size: var(--text-sm);
+        transition: var(--transition-colors);
       }
 
       .navbar__dropdown-item:hover {
-        background: #f3f4f6;
+        background: var(--navbar-hover-bg);
       }
 
       .navbar__dropdown-item--danger {
-        color: #dc2626;
+        color: var(--navbar-danger);
       }
 
       .navbar__dropdown-item--danger:hover {
-        background: #fef2f2;
+        background: var(--navbar-danger-hover-bg);
       }
 
       /* Logo styling */
@@ -408,121 +421,18 @@
       }
 
       /* AAO logo (white) needs invert for light backgrounds */
-      .navbar__logo-img[data-invert="true"] {
+      :root:not([data-theme="dark"]) .navbar__logo-img[data-invert="true"],
+      [data-theme="light"] .navbar__logo-img[data-invert="true"] {
         filter: invert(1);
       }
 
-      /* Dark mode support */
+      /* In dark mode, keep the AAO logo as-is (it's already white) */
       @media (prefers-color-scheme: dark) {
-        .navbar {
-          background: #1b1b1d;
-          box-shadow: 0 1px 2px 0 rgba(255,255,255,.1);
-        }
-
-        .navbar__title,
-        .navbar__link {
-          color: #fff;
-        }
-
-        .navbar__link:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-
-        .navbar__account-btn {
-          color: #fff;
-          border-color: #374151;
-        }
-
-        .navbar__account-btn:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: #4b5563;
-        }
-
-        .navbar__dropdown {
-          background: #1f2937;
-          border-color: #374151;
-        }
-
-        .navbar__dropdown-header {
-          background: #111827;
-          border-color: #374151;
-          color: #9ca3af;
-        }
-
-        .navbar__dropdown-item {
-          color: #fff;
-        }
-
-        .navbar__dropdown-item:hover {
-          background: #374151;
-        }
-
-        .navbar__dropdown-item--danger:hover {
-          background: #7f1d1d;
-        }
-
-        .navbar__dropdown--nav .navbar__dropdown-item.active {
-          color: var(--color-primary-400, #60a5fa);
-        }
-
-        /* In dark mode, remove invert filter for AAO logo (it's already white) */
-        .navbar__logo-img[data-invert="true"] {
+        :root:not([data-theme]) .navbar__logo-img[data-invert="true"] {
           filter: none;
         }
       }
 
-      [data-theme="dark"] .navbar {
-        background: #1b1b1d;
-        box-shadow: 0 1px 2px 0 rgba(255,255,255,.1);
-      }
-
-      [data-theme="dark"] .navbar__title,
-      [data-theme="dark"] .navbar__link {
-        color: #fff;
-      }
-
-      [data-theme="dark"] .navbar__link:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      [data-theme="dark"] .navbar__account-btn {
-        color: #fff;
-        border-color: #374151;
-      }
-
-      [data-theme="dark"] .navbar__account-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: #4b5563;
-      }
-
-      [data-theme="dark"] .navbar__dropdown {
-        background: #1f2937;
-        border-color: #374151;
-      }
-
-      [data-theme="dark"] .navbar__dropdown-header {
-        background: #111827;
-        border-color: #374151;
-        color: #9ca3af;
-      }
-
-      [data-theme="dark"] .navbar__dropdown-item {
-        color: #fff;
-      }
-
-      [data-theme="dark"] .navbar__dropdown-item:hover {
-        background: #374151;
-      }
-
-      [data-theme="dark"] .navbar__dropdown-item--danger:hover {
-        background: #7f1d1d;
-      }
-
-      [data-theme="dark"] .navbar__dropdown--nav .navbar__dropdown-item.active {
-        color: var(--color-primary-400, #60a5fa);
-      }
-
-      /* In dark mode, remove invert filter for AAO logo */
       [data-theme="dark"] .navbar__logo-img[data-invert="true"] {
         filter: none;
       }
@@ -545,9 +455,9 @@
         display: block;
         width: 100%;
         height: 2px;
-        background: #000;
+        background: var(--navbar-text);
         border-radius: 1px;
-        transition: all 0.3s ease;
+        transition: var(--transition-all);
       }
 
       .navbar__hamburger.open .navbar__hamburger-line:nth-child(1) {
@@ -566,15 +476,15 @@
       .navbar__mobile-menu {
         display: none;
         position: absolute;
-        top: 60px;
+        top: var(--nav-height);
         left: 0;
         right: 0;
-        background: #fff;
-        border-top: 1px solid #e5e7eb;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        padding: 1rem;
+        background: var(--navbar-bg);
+        border-top: var(--border-1) solid var(--navbar-border);
+        box-shadow: var(--shadow-md);
+        padding: var(--space-4);
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--space-2);
       }
 
       .navbar__mobile-menu.open {
@@ -582,13 +492,13 @@
       }
 
       .navbar__mobile-menu .navbar__link {
-        padding: 0.75rem 1rem;
-        border-radius: 0.5rem;
+        padding: var(--space-3) var(--space-4);
+        border-radius: var(--radius-lg);
         display: block;
       }
 
       .navbar__mobile-menu .navbar__link:hover {
-        background: #f3f4f6;
+        background: var(--navbar-hover-bg);
       }
 
       .navbar__mobile-menu .navbar__link--indent {
@@ -618,34 +528,6 @@
         }
       }
 
-      /* Dark mode for hamburger and mobile menu */
-      @media (prefers-color-scheme: dark) {
-        .navbar__hamburger-line {
-          background: #fff;
-        }
-
-        .navbar__mobile-menu {
-          background: #1b1b1d;
-          border-top-color: #374151;
-        }
-
-        .navbar__mobile-menu .navbar__link:hover {
-          background: rgba(255, 255, 255, 0.1);
-        }
-      }
-
-      [data-theme="dark"] .navbar__hamburger-line {
-        background: #fff;
-      }
-
-      [data-theme="dark"] .navbar__mobile-menu {
-        background: #1b1b1d;
-        border-top-color: #374151;
-      }
-
-      [data-theme="dark"] .navbar__mobile-menu .navbar__link:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
     </style>
   `;
 
