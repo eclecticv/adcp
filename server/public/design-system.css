@@ -8,6 +8,8 @@
    This is the SINGLE source of truth for all styling.
    ============================================================================= */
 
+@import url('/pico.min.css');
+
 /* =============================================================================
    1. COLOR PALETTE
 
@@ -62,6 +64,17 @@
   --color-bg-subtle: var(--color-gray-50);
   --color-bg-card: #ffffff;
 
+  /* Semantic colors for content on dark / brand backgrounds */
+  --color-text-on-dark: #ffffff;
+  --color-text-on-dark-secondary: rgba(255, 255, 255, 0.9);
+  --color-border-on-dark: rgba(255, 255, 255, 0.5);
+  --color-bg-on-dark-hover: rgba(255, 255, 255, 0.1);
+  --color-bg-on-dark-active: rgba(255, 255, 255, 0.2);
+
+  /* Navigation (used by nav.js / admin-nav.js) */
+  --color-nav-bg: var(--color-bg-card);
+  --shadow-nav: var(--shadow-sm);
+
   /* -----------------------------------------------------------------------------
      1.3 Status Colors (Semantic)
      ----------------------------------------------------------------------------- */
@@ -97,8 +110,8 @@
   /* -----------------------------------------------------------------------------
      1.4 Surface Colors
      ----------------------------------------------------------------------------- */
-  --color-surface: #ffffff;
-  --color-surface-raised: #ffffff;
+  --color-surface: var(--color-bg-card);
+  --color-surface-raised: var(--color-bg-card);
   --color-surface-overlay: rgba(0, 0, 0, 0.5);
   --color-surface-invert: var(--color-gray-900);
 
@@ -113,7 +126,7 @@
   --aao-accent: var(--color-primary-300);
   --aao-off-white: var(--color-off-white);
   --aao-black: var(--color-gray-900);
-  --aao-white: #ffffff;
+  --aao-white: var(--color-bg-card);
   --aao-gray: var(--color-gray-500);
   --aao-gray-light: var(--color-gray-400);
   --aao-gray-dark: var(--color-gray-700);
@@ -181,6 +194,52 @@
   --tracking-wide:   0.025em;
   --tracking-wider:  0.05em;
   --tracking-widest: 0.1em;
+}
+
+/* =============================================================================
+   2.6 PicoCSS Theme Mapping
+
+   Pico is loaded for sane defaults and accessible components.
+   We map Pico's theme variables to the AdCP design tokens.
+   ============================================================================= */
+
+:root {
+  --pico-font-family-sans-serif: var(--font-sans);
+  --pico-font-family-monospace: var(--font-mono);
+  --pico-border-radius: var(--radius-md);
+}
+
+:root:not([data-theme="dark"]),
+[data-theme="light"] {
+  --pico-primary: var(--color-brand);
+  --pico-primary-background: var(--color-brand);
+  --pico-primary-border: var(--color-brand);
+  --pico-primary-hover: var(--color-brand-hover);
+  --pico-primary-hover-background: var(--color-brand-hover);
+  --pico-primary-hover-border: var(--color-brand-hover);
+  --pico-primary-focus: var(--color-primary-200);
+  --pico-primary-inverse: var(--color-text-on-dark);
+
+  --pico-background-color: var(--color-bg-page);
+  --pico-color: var(--color-text);
+  --pico-muted-color: var(--color-text-secondary);
+  --pico-muted-border-color: var(--color-border);
+
+  --pico-h1-color: var(--color-text-heading);
+  --pico-h2-color: var(--color-text-heading);
+  --pico-h3-color: var(--color-text-heading);
+  --pico-h4-color: var(--color-text-heading);
+  --pico-h5-color: var(--color-text-heading);
+  --pico-h6-color: var(--color-text-heading);
+
+  --pico-card-background-color: var(--color-bg-card);
+  --pico-card-border-color: var(--color-border);
+
+  --pico-form-element-background-color: var(--color-bg-card);
+  --pico-form-element-active-background-color: var(--color-bg-card);
+  --pico-form-element-border-color: var(--color-border);
+  --pico-form-element-active-border-color: var(--color-brand);
+  --pico-form-element-focus-color: var(--color-primary-200);
 }
 
 /* =============================================================================
@@ -458,7 +517,7 @@ body {
 /* Primary Button - Solid brand color */
 .ds-btn-primary {
   background: var(--color-brand);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .ds-btn-primary:hover:not(:disabled) {
@@ -475,7 +534,7 @@ body {
 
 .ds-btn-secondary:hover:not(:disabled) {
   background: var(--color-brand);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 /* Ghost Button - Minimal, for less emphasis */
@@ -493,7 +552,7 @@ body {
 /* Danger Button */
 .ds-btn-danger {
   background: var(--color-error-500);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .ds-btn-danger:hover:not(:disabled) {
@@ -513,7 +572,7 @@ body {
 
 /* Button on dark backgrounds (e.g., hero) */
 .ds-btn-on-dark {
-  background: white;
+  background: var(--color-bg-card);
   color: var(--color-brand);
 }
 
@@ -524,13 +583,13 @@ body {
 
 .ds-btn-outline-on-dark {
   background: transparent;
-  color: white;
-  border: var(--border-2) solid rgba(255, 255, 255, 0.5);
+  color: var(--color-text-on-dark);
+  border: var(--border-2) solid var(--color-border-on-dark);
 }
 
 .ds-btn-outline-on-dark:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: white;
+  background: var(--color-bg-on-dark-hover);
+  border-color: var(--color-text-on-dark);
 }
 
 /* -----------------------------------------------------------------------------
@@ -748,8 +807,8 @@ body {
 .ds-text-warning   { color: var(--color-warning-600); }
 .ds-text-error     { color: var(--color-error-600); }
 
-.ds-text-on-dark   { color: white; }
-.ds-text-on-dark-secondary { color: rgba(255, 255, 255, 0.8); }
+.ds-text-on-dark   { color: var(--color-text-on-dark); }
+.ds-text-on-dark-secondary { color: var(--color-text-on-dark-secondary); }
 
 /* -----------------------------------------------------------------------------
    9.9 Link Styles
@@ -876,7 +935,7 @@ body {
    ----------------------------------------------------------------------------- */
 .hero {
   background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-primary-500) 100%);
-  color: white;
+  color: var(--color-text-on-dark);
   padding: var(--space-20) var(--space-8) var(--space-16);
   text-align: center;
   position: relative;
@@ -917,7 +976,7 @@ body {
 
 .hero-subtitle {
   font-size: var(--text-xl);
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--color-text-on-dark-secondary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   margin-bottom: var(--space-10);
   line-height: var(--leading-relaxed);
@@ -949,7 +1008,7 @@ body {
 }
 
 .hero-breadcrumb a {
-  color: white;
+  color: var(--color-text-on-dark);
   text-decoration: none;
 }
 
@@ -999,13 +1058,13 @@ body {
 a.btn-primary,
 a.btn-primary:visited {
   background: var(--color-brand);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .btn-primary:hover,
 a.btn-primary:hover {
   background: var(--color-brand-hover);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 /* Secondary button - Gray background (secondary actions) */
@@ -1023,13 +1082,13 @@ a.btn-primary:hover {
 a.btn-danger,
 a.btn-danger:visited {
   background: var(--color-error-500);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .btn-danger:hover,
 a.btn-danger:hover {
   background: var(--color-error-600);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 /* Ghost button - Transparent with border */
@@ -1053,7 +1112,7 @@ a.btn-danger:hover {
 
 .btn-outline:hover {
   background: var(--color-brand);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 /* Success button - Green background */
@@ -1061,13 +1120,13 @@ a.btn-danger:hover {
 a.btn-success,
 a.btn-success:visited {
   background: var(--color-success-500);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .btn-success:hover,
 a.btn-success:hover {
   background: var(--color-success-600);
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 /* -----------------------------------------------------------------------------
@@ -1097,7 +1156,7 @@ a.btn-success:hover {
 
 /* White button on dark backgrounds */
 .btn-on-dark {
-  background: white;
+  background: var(--color-bg-card);
   color: var(--color-brand);
 }
 
@@ -1108,13 +1167,13 @@ a.btn-success:hover {
 /* Outline button on dark backgrounds */
 .btn-outline-on-dark {
   background: transparent;
-  color: white;
-  border: var(--border-2) solid rgba(255, 255, 255, 0.5);
+  color: var(--color-text-on-dark);
+  border: var(--border-2) solid var(--color-border-on-dark);
 }
 
 .btn-outline-on-dark:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: white;
+  background: var(--color-bg-on-dark-hover);
+  border-color: var(--color-text-on-dark);
 }
 
 /* -----------------------------------------------------------------------------
@@ -1146,7 +1205,7 @@ a.btn-success:hover {
   padding: var(--space-20) var(--space-8);
   background: linear-gradient(135deg, var(--color-brand) 0%, var(--color-primary-500) 100%);
   text-align: center;
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .cta-container {
@@ -1277,19 +1336,19 @@ a.btn-success:hover {
 .card a.btn-primary,
 .card a.btn-primary:visited,
 .card a.btn-primary:hover {
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .card a.btn-danger,
 .card a.btn-danger:visited,
 .card a.btn-danger:hover {
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .card a.btn-success,
 .card a.btn-success:visited,
 .card a.btn-success:hover {
-  color: white;
+  color: var(--color-text-on-dark);
 }
 
 .card a.btn-ghost,
@@ -1352,7 +1411,7 @@ a.btn-success:hover {
 .article-badge-new {
   display: inline-block;
   background: var(--color-success-500);
-  color: white;
+  color: var(--color-text-on-dark);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-sm);
   font-size: var(--text-xs);

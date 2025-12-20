@@ -19,43 +19,45 @@
   // Shared header styles
   const HEADER_STYLES = `
     .admin-header {
-      background-color: #667eea;
-      color: white;
-      padding: 20px 40px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background: var(--gradient-primary);
+      color: var(--color-text-on-dark);
+      padding: var(--space-5) var(--space-8);
+      box-shadow: var(--shadow-sm);
     }
     .admin-header-content {
-      max-width: 1400px;
+      max-width: var(--container-wide);
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: var(--space-6);
     }
     .admin-header h1 {
-      font-size: 28px;
-      font-weight: 600;
+      font-size: var(--text-xl);
+      font-weight: var(--font-bold);
       margin: 0;
-      color: white;
+      color: inherit;
     }
     .admin-header nav {
       display: flex;
-      gap: 20px;
+      gap: var(--space-3);
       align-items: center;
+      flex-wrap: wrap;
     }
     .admin-header nav a {
-      color: white;
+      color: inherit;
       text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      transition: background-color 0.2s;
-      font-size: 15px;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-md);
+      transition: var(--transition-colors);
+      font-size: var(--text-sm);
     }
     .admin-header nav a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: var(--color-bg-on-dark-hover);
     }
     .admin-header nav a.active {
-      background-color: rgba(255, 255, 255, 0.2);
-      font-weight: 600;
+      background-color: var(--color-bg-on-dark-active);
+      font-weight: var(--font-semibold);
     }
   `;
 
