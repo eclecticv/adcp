@@ -1,5 +1,60 @@
 # Changelog
 
+## 3.0.0-rc.4
+
+### Minor Changes
+
+- 5e9a748: Add generic `agents` array to brand.json for brand and house objects. Replaces the pattern of adding named agent fields (`brand_agent`, `rights_agent`) with a typed array that supports brand, rights, measurement, governance, creative, buying, and signals agent types. Deprecates `brand_agent` and `rights_agent` fields.
+- a497d02: Add border_radius, elevation, and spacing definitions to visual_guidelines in brand.json schema. Add extended color roles (heading, body, label, border, divider, surface_1, surface_2) to the colors definition. These are the visual tokens creative agents most often guess wrong when not specified.
+- 106831c: Add broadcast TV, audio, and DOOH forecast support: `measurement_source` field on DeliveryForecast to declare which third-party measurement provider produced the forecast numbers (includes global providers: nielsen, videoamp, comscore, geopath, barb, agf, oztam, kantar, barc, route, rajar, triton); `measured_impressions` metric for delivery as counted by the measurement_source provider (independent of guarantee — works with both guaranteed and modeled forecasts); `downloads` metric for podcast advertising; `plays` metric for DOOH raw play counts before impression multiplier; `package` forecast range unit for sellers who offer distinct inventory packages rather than spend curves; `label` field on ForecastPoint to identify packages by name; relax `mid` requirement on ForecastRange to accept either `mid` or both `low`+`high`.
+- cf4e9ee: Extend brand.json fonts schema with structured font definitions. Each font role (primary, secondary, etc.) now accepts either a CSS font-family string or a structured object with `family`, `files` (with `weight`, `weight_range` for variable fonts, and `style`), `opentype_features` (e.g., ss01, tnum), and `fallbacks` for multi-script coverage. This enables creative agents to resolve and render fonts reliably while remaining backward compatible with simple string values.
+- ac0c3e3: Storyboard-first testing flow: fix creative agent rejecting adcp_major_version, deprecate platform_type gate, add Addie storyboard tools (recommend, detail, run, step), add applicable-storyboards API endpoint
+- 7736865: Add per-request version declaration and VERSION_UNSUPPORTED error code
+
+  **Version negotiation:**
+
+  - `adcp_major_version` optional integer field on all AdCP request schemas lets buyers declare which major version their payloads conform to
+  - Sellers validate against their `major_versions` and return `VERSION_UNSUPPORTED` if out of range
+  - When omitted, sellers assume their highest supported version
+
+  **Error codes:**
+
+  - `VERSION_UNSUPPORTED` — declared major version not supported by seller. Recovery: correctable.
+
+  **Documentation:**
+
+  - Version negotiation section in versioning reference
+  - Version negotiation flow and seller behavior in get_adcp_capabilities docs
+
+### Patch Changes
+
+- 0d5d682: Guard against missing brand_domain_aliases table in sweep job and undefined domain in WorkOS verification_failed webhook
+- f6a1fe2: Fix digest archive route ordering to prevent param collision
+- 985a77b: Delegate comply() to @adcp/client — server compliance module reduced from ~500 lines to re-exports + DB adapter
+- 3ff7397: Fix digest content hierarchy, dedup articles, inclusive tone
+- a8e4d71: Fix article dedup by root domain and WG summaries showing descriptions
+- 25de6cf: Fix digest editor note newlines, paid members only, biweekly lookback, legacy draft handling
+- 4fab693: Improve error diagnostics and migrate test runner from Jest to Vitest
+- f172af6: Add sync_governance to schema index for client discoverability.
+- 70740e8: Add missing route handler for /dashboard-membership to fix "Cannot GET" errors
+- 5a977c3: Add media_buy_generative_seller storyboard for sellers that generate creatives from briefs at buy time
+- 33b4f67: Luma reverse sync: auto-import events from Luma calendar, Zoom attendee CSV import, webhook handling for all Luma actions.
+- afe43ee: Fix migration guide missing comply-blocking requirements
+
+  - Add `buying_mode` as a required field on all `get_products` requests to the breaking changes table
+  - Add warning callout for `buying_mode` comply-blocking requirement
+  - Fix Accounts protocol row: protocol is required for all buyers, `require_operator_auth` determines which task (`sync_accounts` vs `list_accounts`) to call
+
+- 62f91de: Newsletter admin editors, email routing fix, and production readiness
+- 2353f4d: Wire existing OAuth flow to agent dashboard UI. Members can now authorize agents via OAuth instead of manually pasting tokens. Adds auth-status endpoint and OAuth-first connect form.
+- f18148e: Redesign organization dashboard: split into sidebar-navigated pages (Overview, Team, Agents), restore journey stepper with product-usage milestones, add upgrade teasers for all tiers with price reframing, wire team certification summary, show health score weights, and fix nonmember 403 error.
+- 6f45f15: Personalized action nudge in newsletter based on recipient profile
+- 8e8f604: Let users select a primary email from linked aliases via PUT /api/me/linked-emails/primary.
+- 26816c5: Add Regenerate button to digest admin editor
+- fd1efc4: Storyboard UX: short-circuit comply() when products fail, inline agent connect form, filter picker by capabilities, OAuth auth fallback, generative creative storyboard
+- 4095926: Add The Build admin editor and consolidate newsletter sidebar
+- 9415ae3: Split newsletter into This Edition + Industry Intel sections
+
 ## 3.0.0-rc.3
 
 ### Major Changes
